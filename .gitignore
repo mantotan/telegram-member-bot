@@ -1,6 +1,6 @@
-session/+84*
-data/group/+84*
-data/user/+84*
+session/+*
+data/group/+*
+data/user/+*
 phone.txt
 current_count.txt
 errors.txt
