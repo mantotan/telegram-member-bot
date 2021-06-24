@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='telegram-member-bot',
     version='1.0.0',
-    packages=['telethon', 'SQLAlchemy', 'PyMySQL', 'python-dotenv', 'pprint', 'python-dotenv'],
+    packages=['telethon', 'SQLAlchemy', 'PyMySQL', 'python-dotenv', 'pprint'],
     url='https://github.com/mantotan/telegram-member-bot',
     license='MIT',
     author='mantotan',
