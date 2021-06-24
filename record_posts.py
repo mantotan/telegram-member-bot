@@ -57,7 +57,7 @@ def get_chat(client):
             hash=0))
         chats.extend(posts.messages)
         for chat in chats:
-            pprint.pprint(chat.to_dict(), width=400)
+            # pprint.pprint(chat.to_dict(), width=400)
             # print(str(chat.message))
             if channel_username == 'unfolded' and chat.entities is not None and type(chat.entities[0]) is MessageEntityTextUrl:
                 url = str(chat.entities[0].url)
