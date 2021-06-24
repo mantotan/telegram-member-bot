@@ -1,4 +1,5 @@
 import os
+import urllib.parse
 from dotenv import load_dotenv
 from telethon import TelegramClient, connection
 import logging
@@ -18,7 +19,7 @@ from tables.channel_posts import ChannelPost
 logging.basicConfig(level=logging.WARNING)
 load_dotenv()
 
-engine = create_engine('mysql+pymysql://'+os.getenv('DB_USERNAME')+':'+os.getenv('DB_PASS')+'@'+os.getenv('DB_URL')+':'+os.getenv('DB_PORT')+'/'+os.getenv('DB_SCHEMA')+'')
+engine = create_engine('mysql+pymysql://'+os.getenv('DB_USERNAME')+':'+urllib.parse.quote(os.getenv('DB_PASS'))+'@'+os.getenv('DB_URL')+':'+os.getenv('DB_PORT')+'/'+os.getenv('DB_SCHEMA')+'')
 db_conn = engine.connect()
 session = Session(engine, future=True)
 
