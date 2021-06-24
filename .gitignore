@@ -8,4 +8,6 @@ config.json
 .idea
 /venv
 /.env
-/telegram_member_bot.egg-info
+/*.egg-info
+*.pyo
+*.pyc
