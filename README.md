@@ -1,9 +1,9 @@
-# addmember-telegram
+# telegram-member-bot
 Use `python 3` to add member from Group A to Group B (migrate member of your group)
 
 
 ## Require
-* Environment of python 3 (Linux, Window)
+* Environment of python 3 (Linux, Window, MacOS)
 * Need about 20 accounts to run (Avoid block account Telegram)
 * Each account need in Source Group and Target Group
 * Notice you region phone
