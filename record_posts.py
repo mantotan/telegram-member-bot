@@ -59,7 +59,7 @@ def get_chat(client):
         for chat in chats:
             pprint.pprint(chat.to_dict(), width=400)
             # print(str(chat.message))
-            if channel_username is 'unfolded' and chat.entities is not None and type(chat.entities[0]) is MessageEntityTextUrl:
+            if channel_username == 'unfolded' and chat.entities is not None and type(chat.entities[0]) is MessageEntityTextUrl:
                 url = str(chat.entities[0].url)
                 # print(str(chat.entities[0].url))
                 action = insert(ChannelPost).values(
