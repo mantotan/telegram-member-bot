@@ -1,8 +1,11 @@
-session/+84*
-data/group/+84*
-data/user/+84*
+session/+62*
+data/group/+62*
+data/user/+62*
 phone.txt
 current_count.txt
 errors.txt
 config.json
 .idea
+/venv
+/.env
+/telegram_member_bot.egg-info
