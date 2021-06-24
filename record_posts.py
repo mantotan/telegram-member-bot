@@ -59,20 +59,21 @@ def get_chat(client):
         for chat in chats:
             # pprint.pprint(chat.to_dict(), width=400)
             # print(str(chat.message))
-            if channel_username == 'unfolded' and chat.entities is not None and type(chat.entities[0]) is MessageEntityTextUrl:
-                url = str(chat.entities[0].url)
-                # print(str(chat.entities[0].url))
-                action = insert(ChannelPost).values(
-                    username=channel_username,
-                    group_type='channel',
-                    message_type='Message',
-                    posted_date=chat.date,
-                    message_id=int(chat.id),
-                    message=str(chat.message),
-                    is_posted=False,
-                    url=url
-                )
-                db_conn.execute(action)
+            if channel_username == 'unfolded':
+                if chat.entities is not None and type(chat.entities[0]) is MessageEntityTextUrl:
+                    url = str(chat.entities[0].url)
+                    # print(str(chat.entities[0].url))
+                    action = insert(ChannelPost).values(
+                        username=channel_username,
+                        group_type='channel',
+                        message_type='Message',
+                        posted_date=chat.date,
+                        message_id=int(chat.id),
+                        message=str(chat.message),
+                        is_posted=False,
+                        url=url
+                    )
+                    db_conn.execute(action)
             else:
                 action = insert(ChannelPost).values(
                     username=channel_username,
