@@ -12,3 +12,4 @@ class ChannelPost(Base):
     message_id = Column(String)
     message = Column(Integer)
     is_posted = Column(Boolean)
+    url = Column(String)
