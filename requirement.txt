@@ -1,0 +1,6 @@
+telethon
+SQLAlchemy
+PyMySQL
+python-dotenv
+pprint
+python-dotenv
