@@ -1,6 +1,10 @@
-# telegram-member-bot
-Use `python 3` to add member from Group A to Group B (migrate member of your group)
+# Telegram Member Bot - v1.0.1
 
+Forked from https://github.com/south1907/addmember-telegram
+
+## Usage
+* Add member from Group A to Group B (migrate member of your group)
+* Copy channel content from Group A to Group B
 
 ## Require
 * Environment of python 3 (Linux, Window, MacOS)
@@ -75,4 +79,7 @@ Note: If your account blocked, get link https://web.telegram.org/#/im?p=@SpamBot
 Done!
 
 ## Ps: 
-Because some people interesting my repository create some issue, inbox Telegram. I don't have time to solve it, so I update your script to be good. I will open issue and try to resolved it. But some thing about basic language `python`, please search Internet before create issue! Thanks!
+Because some people interesting my repository create some issue, inbox Telegram. I don't have time to solve it, so I update your script to be good. I will open issue and try to resolved it. But some thing about basic language `python`, please search Internet before creating issue! Thanks!
+
+DONATION :
+ETH : 0x342F09878bBA348a803f97CaFf7E8d7CD5A262B2
