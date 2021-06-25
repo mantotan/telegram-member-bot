@@ -1,5 +1,6 @@
 import os
 import urllib.parse
+from pathlib import Path
 from dotenv import load_dotenv
 from telethon import TelegramClient, connection
 import logging
@@ -40,7 +41,7 @@ def post_group():
             session.commit()
 
 def send_message(phone, api_id, api_hash, message):
-    folder_session = 'session/'
+    folder_session = str(Path(__file__).parent.absolute()) + str('/session/')
     client = TelegramClient(folder_session + phone, api_id, api_hash)
     client.connect()
     if not client.is_user_authorized():
