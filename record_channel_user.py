@@ -53,8 +53,7 @@ def get_existing_user(user_id):
 def save_channel_hash(users, bot):
     user_hashes = []
     for idx, user in enumerate(users):
-        user_hash = session.query(UserHash).where(UserHash.user_id == user.id).where(UserHash.bot_api_id == bot.api_id).first()
-        if user_hash is None and user is not None:
+        if user is not None:
             user_hashes.append({
                 'user_id': user.id,
                 'bot_api_id': bot.api_id,
@@ -122,24 +121,6 @@ def get_group_user(client, recorded_channel, bot):
                     'last_online': last_online,
                     'is_invited': False
                 })
-                # action = insert(TelegramUser).values(
-                #     channel_id=channel.id,
-                #     user_id=user.id,
-                #     access_hash=user.access_hash,
-                #     username=user.username,
-                #     first_name=user.first_name,
-                #     last_name=user.last_name,
-                #     has_photo=(user.photo is not None),
-                #     is_bot=user.bot,
-                #     last_seen=last_seen,
-                #     last_online=last_online,
-                #     is_invited=False
-                # )
-                # db_conn.execute(action)
-            else:
-                existing_user.last_seen = last_seen
-                existing_user.last_online = last_online
-                session.commit()
 
             if len(telegram_users) >= 1000 or idx == len(all_participants)-1:
                 bulk_insert = insert(TelegramUser).values(telegram_users)
