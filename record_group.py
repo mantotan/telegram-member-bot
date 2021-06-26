@@ -4,6 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from telethon import TelegramClient, connection
 import logging
+import time
 from telethon import sync, TelegramClient, events
 from telethon.tl.functions.messages import GetDialogsRequest
 from telethon.tl.types import InputPeerEmpty, UserStatusOffline, UserStatusRecently, UserStatusLastMonth, \
@@ -39,6 +40,7 @@ def start():
         else:
             print('Login success ' + str(bot.phone))
             get_client_groups(client, bot)
+        time.sleep(2)
 
 
 def get_client_groups(client, bot):
