@@ -19,7 +19,8 @@ from sqlalchemy.orm import Session
 
 from tables.telegram_users import TelegramUser
 from tables.my_bots import MyBot
-from tables.recorded_channels import RecordedChannel
+from tables.channel_hashes import ChannelHash
+from tables.user_hashes import UserHash
 
 load_dotenv()
 
@@ -34,9 +35,14 @@ def get_targeted_group_id():
     return config['group_target']
 
 
-def get_group_by_id(group_id):
-    group = session.query(RecordedChannel).where(RecordedChannel.channel_id == group_id).first()
-    return group
+def get_channel_hash(group_id, bot_api_id):
+    channel_hash = session.query(ChannelHash).where(ChannelHash.channel_id == group_id).where(ChannelHash.bot_api_id == bot_api_id).first()
+    return channel_hash
+
+
+def get_user_hash(user_id, bot_api_id):
+    user_hash = session.query(UserHash).where(UserHash.user_id == user_id).where(UserHash.bot_api_id == bot_api_id).first()
+    return user_hash
 
 
 def get_inviting_user():
@@ -92,15 +98,16 @@ my_bot = get_bot()
 client = get_bot_client(my_bot)
 
 group_target_id = get_targeted_group_id()
-current_target_group = get_group_by_id(group_target_id)
-target_group_entity = InputPeerChannel(group_target_id, int(current_target_group.access_hash))
+current_channel_hash = get_channel_hash(group_target_id, my_bot.api_id)
+target_group_entity = InputPeerChannel(group_target_id, int(current_channel_hash.access_hash))
 
 user = get_inviting_user()
 
 if user is not None:
     try:
         print('add member: ' + str(user.user_id))
-        user_to_add = InputPeerUser(int(user.user_id), int(user.access_hash))
+        current_user_hash = get_user_hash(user.user_id, my_bot.api_id)
+        user_to_add = InputPeerUser(int(user.user_id), int(current_user_hash.access_hash))
         client(InviteToChannelRequest(target_group_entity, [user_to_add]))
         print('Add member ' + str(user.user_id) + ' success')
         update_my_bot(my_bot, True, False)
@@ -115,5 +122,6 @@ if user is not None:
         update_invited_user(user, False, 'failed ' + str(e))
     except Exception as e:
         print("Error other")
+        print(e)
         update_my_bot(my_bot, True, False)
         update_invited_user(user, False, 'failed ' + str(e))

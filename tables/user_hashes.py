@@ -1,0 +1,10 @@
+from sqlalchemy.orm import declarative_base
+Base = declarative_base()
+from sqlalchemy import Column, Integer, String
+
+class UserHash(Base):
+    __tablename__ = 'user_hashes'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer)
+    bot_api_id = Column(Integer)
+    access_hash = Column(String)
