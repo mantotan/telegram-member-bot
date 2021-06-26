@@ -123,10 +123,11 @@ def get_group_user(client, recorded_channel, bot):
                 })
 
             if len(telegram_users) >= 1000 or idx == len(all_participants)-1:
-                bulk_insert = insert(TelegramUser).values(telegram_users)
-                db_conn.execute(bulk_insert)
-                session.commit()
-                telegram_users = []
+                if(len(telegram_users) > 0):
+                    bulk_insert = insert(TelegramUser).values(telegram_users)
+                    db_conn.execute(bulk_insert)
+                    session.commit()
+                    telegram_users = []
         except Exception as e:
             print(e)
             print("Error get user")
