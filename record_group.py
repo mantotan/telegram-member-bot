@@ -38,7 +38,7 @@ def start():
             print('Login fail, need to run init_session')
         else:
             print('Login success ' + str(bot.phone))
-        get_client_groups(client, bot)
+            get_client_groups(client, bot)
 
 
 def get_client_groups(client, bot):
