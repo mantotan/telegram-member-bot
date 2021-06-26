@@ -29,7 +29,7 @@ session = Session(engine, future=True)
 
 
 def get_targeted_group_id():
-    with open('config.json', 'r', encoding='utf-8') as f:
+    with open(str(Path(__file__).parent.absolute()) + str('/config.json'), 'r', encoding='utf-8') as f:
         config = json.loads(f.read())
     return config['group_target']
 
@@ -97,22 +97,23 @@ target_group_entity = InputPeerChannel(group_target_id, int(current_target_group
 
 user = get_inviting_user()
 
-try:
-    print('add member: ' + str(user.user_id))
-    user_to_add = InputPeerUser(int(user.user_id), int(user.access_hash))
-    client(InviteToChannelRequest(target_group_entity, [user_to_add]))
-    print('Add member ' + str(user.user_id) + ' success')
-    update_my_bot(my_bot, True, False)
-    update_invited_user(user, True, 'success')
-except PeerFloodError as e:
-    print("Error Fooling cmnr")
-    update_my_bot(my_bot, True, True)
-    update_invited_user(user, False, 'failed ' + str(e))
-except UserPrivacyRestrictedError as e:
-    print("Error Privacy")
-    update_my_bot(my_bot, True, False)
-    update_invited_user(user, False, 'failed ' + str(e))
-except Exception as e:
-    print("Error other")
-    update_my_bot(my_bot, True, False)
-    update_invited_user(user, False, 'failed ' + str(e))
+if user is not None:
+    try:
+        print('add member: ' + str(user.user_id))
+        user_to_add = InputPeerUser(int(user.user_id), int(user.access_hash))
+        client(InviteToChannelRequest(target_group_entity, [user_to_add]))
+        print('Add member ' + str(user.user_id) + ' success')
+        update_my_bot(my_bot, True, False)
+        update_invited_user(user, True, 'success')
+    except PeerFloodError as e:
+        print("Error Fooling cmnr")
+        update_my_bot(my_bot, True, True)
+        update_invited_user(user, False, 'failed ' + str(e))
+    except UserPrivacyRestrictedError as e:
+        print("Error Privacy")
+        update_my_bot(my_bot, True, False)
+        update_invited_user(user, False, 'failed ' + str(e))
+    except Exception as e:
+        print("Error other")
+        update_my_bot(my_bot, True, False)
+        update_invited_user(user, False, 'failed ' + str(e))
