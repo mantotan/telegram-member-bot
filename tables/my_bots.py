@@ -12,3 +12,4 @@ class MyBot(Base):
     last_used = Column(DateTime)
     is_used = Column(Boolean)
     is_paused = Column(Boolean)
+    paused_date = Column(DateTime)

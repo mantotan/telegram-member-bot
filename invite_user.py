@@ -82,6 +82,8 @@ def update_my_bot(bot, is_used, is_paused):
     bot.last_used = datetime.datetime.now()
     bot.is_used = is_used
     bot.is_paused = is_paused
+    if is_paused is True:
+        bot.paused_date = datetime.datetime.now()
     session.commit()
 
 
