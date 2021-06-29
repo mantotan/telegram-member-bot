@@ -65,6 +65,23 @@ def get_chat(client):
                     if chat.entities is not None and type(chat.entities[0]) is MessageEntityTextUrl:
                         url = str(chat.entities[0].url)
                         # print(str(chat.entities[0].url))
+                        try:
+                            action = insert(ChannelPost).values(
+                                username=channel_username,
+                                group_type='channel',
+                                message_type='Message',
+                                posted_date=chat.date,
+                                message_id=int(chat.id),
+                                message=str(chat.message),
+                                is_posted=False,
+                                url=url
+                            )
+                            db_conn.execute(action)
+                        except Exception as e:
+                            print(str(datetime.datetime.now()) + " Error other")
+                            print(e)
+                else:
+                    try:
                         action = insert(ChannelPost).values(
                             username=channel_username,
                             group_type='channel',
@@ -72,20 +89,11 @@ def get_chat(client):
                             posted_date=chat.date,
                             message_id=int(chat.id),
                             message=str(chat.message),
-                            is_posted=False,
-                            url=url
+                            is_posted=False
                         )
                         db_conn.execute(action)
-                else:
-                    action = insert(ChannelPost).values(
-                        username=channel_username,
-                        group_type='channel',
-                        message_type='Message',
-                        posted_date=chat.date,
-                        message_id=int(chat.id),
-                        message=str(chat.message),
-                        is_posted=False
-                    )
-                    db_conn.execute(action)
+                    except Exception as e:
+                        print(str(datetime.datetime.now()) + " Error other")
+                        print(e)
 
 start(os.getenv('TL_READ_API_PHONE'), os.getenv('TL_READ_API_ID'), os.getenv('TL_READ_API_HASH'))

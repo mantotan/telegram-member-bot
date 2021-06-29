@@ -107,23 +107,23 @@ user = get_inviting_user()
 
 if user is not None:
     try:
-        print('add member: ' + str(user.user_id))
+        print(str(datetime.datetime.now()) + ' add member: ' + str(user.user_id))
         current_user_hash = get_user_hash(user.user_id, my_bot.api_id)
         user_to_add = InputPeerUser(int(user.user_id), int(current_user_hash.access_hash))
         client(InviteToChannelRequest(target_group_entity, [user_to_add]))
-        print('Add member ' + str(user.user_id) + ' success')
+        print(str(datetime.datetime.now()) + ' Add member ' + str(user.user_id) + ' success')
         update_my_bot(my_bot, True, False)
         update_invited_user(user, True, 'success')
     except PeerFloodError as e:
-        print("Error Fooling cmnr")
+        print(str(datetime.datetime.now()) + " Error Fooling cmnr")
         update_my_bot(my_bot, True, True)
         update_invited_user(user, False, 'failed ' + str(e))
     except UserPrivacyRestrictedError as e:
-        print("Error Privacy")
+        print(str(datetime.datetime.now()) + " Error Privacy")
         update_my_bot(my_bot, True, False)
         update_invited_user(user, False, 'failed ' + str(e))
     except Exception as e:
-        print("Error other")
+        print(str(datetime.datetime.now()) + " Error other")
         print(e)
         update_my_bot(my_bot, True, False)
         update_invited_user(user, False, 'failed ' + str(e))
