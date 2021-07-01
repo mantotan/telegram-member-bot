@@ -90,6 +90,7 @@ def update_my_bot(bot, is_used, is_paused):
 def update_invited_user(invited_user, is_invited, invite_result):
     invited_user.is_invited = is_invited
     invited_user.invite_result = invite_result
+    invited_user.invited_date = datetime.datetime.now()
     session.commit()
 
 

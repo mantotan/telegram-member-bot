@@ -17,3 +17,4 @@ class TelegramUser(Base):
     last_online = Column(DateTime)
     is_invited = Column(Boolean)
     invite_result = Column(String)
+    invited_date = Column(DateTime)

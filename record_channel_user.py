@@ -119,7 +119,8 @@ def get_group_user(client, recorded_channel, bot):
                     'is_bot': user.bot,
                     'last_seen': last_seen,
                     'last_online': last_online,
-                    'is_invited': False
+                    'is_invited': False,
+                    'invited_date': None
                 })
 
             if len(telegram_users) >= 1000 or idx == len(all_participants)-1:
