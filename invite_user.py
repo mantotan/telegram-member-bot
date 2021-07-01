@@ -28,6 +28,9 @@ engine = create_engine('mysql+pymysql://'+os.getenv('DB_USERNAME')+':'+urllib.pa
 db_conn = engine.connect()
 session = Session(engine, future=True)
 
+folder_session = str(Path(__file__).parent.absolute()) + str('/session/')
+logging.basicConfig(level=logging.WARNING)
+
 
 def get_targeted_group_id():
     with open(str(Path(__file__).parent.absolute()) + str('/config.json'), 'r', encoding='utf-8') as f:
@@ -94,37 +97,40 @@ def update_invited_user(invited_user, is_invited, invite_result):
     session.commit()
 
 
-folder_session = str(Path(__file__).parent.absolute()) + str('/session/')
-logging.basicConfig(level=logging.WARNING)
+def start_invite_user(is_first):
+    my_bot = get_bot()
+    client = get_bot_client(my_bot)
 
-my_bot = get_bot()
-client = get_bot_client(my_bot)
+    group_target_id = get_targeted_group_id()
+    current_channel_hash = get_channel_hash(group_target_id, my_bot.api_id)
+    target_group_entity = InputPeerChannel(group_target_id, int(current_channel_hash.access_hash))
 
-group_target_id = get_targeted_group_id()
-current_channel_hash = get_channel_hash(group_target_id, my_bot.api_id)
-target_group_entity = InputPeerChannel(group_target_id, int(current_channel_hash.access_hash))
+    user = get_inviting_user()
 
-user = get_inviting_user()
+    if user is not None:
+        try:
+            print(str(datetime.datetime.now()) + ' add member: ' + str(user.user_id))
+            current_user_hash = get_user_hash(user.user_id, my_bot.api_id)
+            user_to_add = InputPeerUser(int(user.user_id), int(current_user_hash.access_hash))
+            client(InviteToChannelRequest(target_group_entity, [user_to_add]))
+            print(str(datetime.datetime.now()) + ' Add member ' + str(user.user_id) + ' success')
+            update_my_bot(my_bot, True, False)
+            update_invited_user(user, True, 'success')
+        except PeerFloodError as e:
+            print(str(datetime.datetime.now()) + " Error Fooling cmnr")
+            update_my_bot(my_bot, True, True)
+            update_invited_user(user, False, 'failed ' + str(e))
+        except UserPrivacyRestrictedError as e:
+            print(str(datetime.datetime.now()) + " Error Privacy")
+            update_my_bot(my_bot, True, False)
+            update_invited_user(user, False, 'failed ' + str(e))
+            if is_first:
+                start_invite_user(False)
+        except Exception as e:
+            print(str(datetime.datetime.now()) + " Error other")
+            print(e)
+            update_my_bot(my_bot, True, False)
+            update_invited_user(user, False, 'failed ' + str(e))
 
-if user is not None:
-    try:
-        print(str(datetime.datetime.now()) + ' add member: ' + str(user.user_id))
-        current_user_hash = get_user_hash(user.user_id, my_bot.api_id)
-        user_to_add = InputPeerUser(int(user.user_id), int(current_user_hash.access_hash))
-        client(InviteToChannelRequest(target_group_entity, [user_to_add]))
-        print(str(datetime.datetime.now()) + ' Add member ' + str(user.user_id) + ' success')
-        update_my_bot(my_bot, True, False)
-        update_invited_user(user, True, 'success')
-    except PeerFloodError as e:
-        print(str(datetime.datetime.now()) + " Error Fooling cmnr")
-        update_my_bot(my_bot, True, True)
-        update_invited_user(user, False, 'failed ' + str(e))
-    except UserPrivacyRestrictedError as e:
-        print(str(datetime.datetime.now()) + " Error Privacy")
-        update_my_bot(my_bot, True, False)
-        update_invited_user(user, False, 'failed ' + str(e))
-    except Exception as e:
-        print(str(datetime.datetime.now()) + " Error other")
-        print(e)
-        update_my_bot(my_bot, True, False)
-        update_invited_user(user, False, 'failed ' + str(e))
+
+start_invite_user(True)
