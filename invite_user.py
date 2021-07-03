@@ -124,8 +124,8 @@ def start_invite_user(is_first):
             print(str(datetime.datetime.now()) + " Error Privacy")
             update_my_bot(my_bot, True, False)
             update_invited_user(user, False, 'failed ' + str(e))
-            if is_first:
-                start_invite_user(False)
+            # if is_first:
+            #     start_invite_user(False)
         except Exception as e:
             print(str(datetime.datetime.now()) + " Error other")
             print(e)
