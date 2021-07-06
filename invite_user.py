@@ -133,4 +133,5 @@ def start_invite_user(is_first):
             update_invited_user(user, False, 'failed ' + str(e))
 
 
-start_invite_user(True)
+if 9 < datetime.datetime.now().hour < 22:
+    start_invite_user(True)
