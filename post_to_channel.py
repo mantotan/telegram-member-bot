@@ -60,4 +60,6 @@ def send_message(phone, api_id, api_hash, message):
             parse_mode='html'
         )
 
-post_group()
+
+if 9 < datetime.datetime.now().hour < 22:
+    post_group()
