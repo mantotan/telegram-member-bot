@@ -41,7 +41,7 @@ def post_group():
                 data.is_posted = True
                 session.commit()
     except Exception as e:
-        print(str(datetime.datetime.now()) + " Error other")
+        print(str(datetime.now()) + " Error other")
         print(e)
 
 def send_message(phone, api_id, api_hash, message):
@@ -49,7 +49,7 @@ def send_message(phone, api_id, api_hash, message):
     client = TelegramClient(folder_session + phone, api_id, api_hash)
     client.connect()
     if not client.is_user_authorized():
-        print(str(datetime.datetime.now()) + ' Post to Channel Login fail, need to run init_session')
+        print(str(datetime.now()) + ' Post to Channel Login fail, need to run init_session')
     else:
         destination_channel_username = os.getenv('POST_TO_USERNAME')
         entity = client.get_entity(destination_channel_username)
@@ -61,5 +61,5 @@ def send_message(phone, api_id, api_hash, message):
         )
 
 
-if 9 < datetime.datetime.now().hour < 22:
+if 9 < datetime.now().hour < 22:
     post_group()
