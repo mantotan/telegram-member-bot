@@ -27,6 +27,7 @@ paused_bots = session.query(MyBot).where(MyBot.is_paused == True).where(MyBot.pa
 try:
     for bot in paused_bots:
         bot.is_paused = False
+        bot.is_used = True
         session.commit()
 except Exception as e:
     print('Resuming bot error')
