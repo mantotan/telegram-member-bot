@@ -123,6 +123,7 @@ def start_invite_user(is_first):
                 print(e)
                 update_my_bot(my_bot, True, True)
                 update_invited_user(user, False, 'failed ' + str(e))
+                break
             except UserPrivacyRestrictedError as e:
                 print(str(datetime.datetime.now()) + " Error Privacy")
                 print(e)
